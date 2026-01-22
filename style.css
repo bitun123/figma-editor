@@ -138,6 +138,7 @@
             background-color: var(--bg-canvas);
             transition: background-color 0.3s;
             touch-action: none;
+            position: relative;
         }
 
         /* #edit-container .draw-area.can-selected {
@@ -151,6 +152,7 @@
         #can {
             width: 100%;
             height: 100%;
+            position: relative;
         }
 
 
@@ -168,17 +170,21 @@
             border: 1px solid #333;
             position: relative;
         }
-/* resize the right sidebar */
+
+        /* resize the right sidebar */
         .resize {
             width: 2px;
             height: 100%;
             cursor: ew-resize;
             position: absolute;
             top: 0;
+            transition: all 0.1s ease-out;
         }
+
         .resize.right {
             left: 0;
         }
+
         .resize:hover {
             background-color: #b1b1b1;
         }
@@ -204,4 +210,24 @@
             text-transform: uppercase;
             margin-bottom: 10px;
             display: block;
+        }
+
+        .rectangle {
+            position: absolute;
+            border: 2px solid blue;
+            background: rgba(0, 0, 255, 0.1);
+        }
+        .rectangle.selected{
+            border-color: red;
+
+        }
+        .handle{
+            width: 8px;
+            height: 8px;
+            background: white;
+            border: 2px solid rgb(98, 98, 98);
+            position: absolute;
+            right: -5px;
+            bottom: -5px;
+            cursor: se-resize;
         }
