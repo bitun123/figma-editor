@@ -47,7 +47,7 @@ function reSizeSidebar() {
   initResizerFn(resizer, sidebar);
 }
 reSizeSidebar();
-/* ---------- Tool function ---------- */
+
 // Rectangle Tool
 function ractangleTool() {
   const propContent = document.querySelector(".prop-main-content");
@@ -351,85 +351,223 @@ ractangleTool();
 
 //Text Tool
 
-const textToolBtn = document.getElementById("textBtn");
+function texttools() {
+  const textToolBtn = document.getElementById("textBtn");
 
-let isDragging = false;
-let currentBox = null;
-let offsetX = 0;
-let offsetY = 0;
+  let isDragging = false;
+  let currentBox = null;
+  let offsetX = 0;
+  let offsetY = 0;
 
-canvas.addEventListener("dblclick", (e) => {
-  if (activeTool !== "text") return;
-  const box = document.createElement("div");
-  box.className = "text-box";
-  box.contentEditable = true;
-  box.innerText = "";
+  canvas.addEventListener("dblclick", (e) => {
+    const box = document.createElement("div");
+    box.className = "text-box";
+    box.contentEditable = true;
+    box.innerText = "";
 
-  const text = canvas.getBoundingClientRect();
-  box.style.left = e.clientX - text.left + "px";
-  box.style.top = e.clientY - text.top + "px";
-  canvas.appendChild(box);
+    const text = canvas.getBoundingClientRect();
+    box.style.left = e.clientX - text.left + "px";
+    box.style.top = e.clientY - text.top + "px";
+    canvas.appendChild(box);
 
-  box.focus();
-  makeDraggable(box);
-});
+    box.focus();
+    makeDraggable(box);
+  });
 
-const fontSizeSelect = document.getElementById("fontSizeSelect");
-let textBox = null;
+  const fontSizeSelect = document.getElementById("fontSizeSelect");
+  let textBox = null;
 
-fontSizeSelect.addEventListener("input", () => {
-  if (!textBox) return;
+  fontSizeSelect.addEventListener("input", () => {
+    if (!textBox) return;
 
-  const size = fontSizeSelect.value;
+    const size = fontSizeSelect.value;
 
-  if (size > 0) {
-    textBox.style.fontSize = size + "px";
+    if (size > 0) {
+      textBox.style.fontSize = size + "px";
+    }
+  });
+  const textColor = document.querySelector("#text-color");
+
+  textColor.addEventListener("input", () => {
+    if (!textBox) return;
+
+    textBox.style.color = textColor.value;
+  });
+
+  function makeDraggable(elem) {
+    elem.addEventListener("click", () => {
+      fontSizeSelect.value = parseInt(getComputedStyle(elem).fontSize);
+    });
+    elem.addEventListener("mousedown", (e) => {
+      if (elem.contentEditable === "true") return;
+
+      isDragging = true;
+      currentBox = elem;
+      textBox = elem;
+
+      const rect = elem.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+
+      // font size input sync
+    });
+
+    elem.addEventListener("dblclick", () => {
+      elem.contentEditable = true;
+      elem.focus();
+    });
+
+    elem.addEventListener("blur", () => {
+      elem.contentEditable = false;
+    });
+    document.addEventListener("mousemove", (e) => {
+      if (!isDragging || !currentBox) return;
+
+      const rect = canvas.getBoundingClientRect();
+      currentBox.style.left = e.clientX - rect.left - offsetX + "px";
+      currentBox.style.top = e.clientY - rect.top - offsetY + "px";
+    });
+
+    document.addEventListener("mouseup", () => {
+      isDragging = false;
+      currentBox = null;
+    });
   }
-});
-const textColor = document.querySelector("#text-color");
+}
+texttools();
 
-textColor.addEventListener("input", () => {
-  if (!textBox) return;
 
-  textBox.style.color = textColor.value;
-});
 
-function makeDraggable(elem) {
-  elem.addEventListener("click", () => {
-    fontSizeSelect.value = parseInt(getComputedStyle(elem).fontSize);
-  });
-  elem.addEventListener("mousedown", (e) => {
-    if (elem.contentEditable === "true") return;
+//reset
 
-    isDragging = true;
-    currentBox = elem;
-    textBox = elem;
-
-    const rect = elem.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-
-    // font size input sync
-  });
-
-  elem.addEventListener("dblclick", () => {
-    elem.contentEditable = true;
-    elem.focus();
-  });
-
-  elem.addEventListener("blur", () => {
-    elem.contentEditable = false;
-  });
-  document.addEventListener("mousemove", (e) => {
-    if (!isDragging || !currentBox) return;
-
-    const rect = canvas.getBoundingClientRect();
-    currentBox.style.left = e.clientX - rect.left - offsetX + "px";
-    currentBox.style.top = e.clientY - rect.top - offsetY + "px";
-  });
-
-  document.addEventListener("mouseup", () => {
-    isDragging = false;
-    currentBox = null;
+function reset() {
+  const reset = document.querySelector(".btn-reset");
+  reset.addEventListener("click", () => {
+    canvas.innerHTML = "";
   });
 }
+reset();
+
+
+
+function exportJson(){
+const jsonExport = document.querySelector(".btn-json")
+jsonExport.addEventListener("click",()=>{
+  const data =canvas.outerHTML;
+
+
+
+
+    navigator.clipboard.writeText(data)
+    .then(() => alert("copy successfully"))
+    .catch(err => console.error("Copy failed:", err));
+})
+
+}
+
+
+
+
+
+
+
+function exportHTML() {
+
+  // const rectangles = document.querySelectorAll(".rectangle");
+
+const can = canvas.outerHTML
+
+  const html = `
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma Editor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="hero">
+
+        <div id="header">
+            <h1>Figma-Editor</h1>
+            <div class="rightSide_action">
+                <button class="btn btn-reset">Reset</button>
+                <button class="btn btn-json">Export JSON</button>
+                <button class="btn btn-html">Export HTML</button>
+                <button class="btn btn-sidebar-toggle">⚙️</button>
+            </div>
+        </div>
+
+        <div id="edit-container">
+
+            <div class="toolbar">
+                <button class="tool-btn" id="rectBtn" title="Rectangle">□</button>
+                <button class="tool-btn" id="textBtn" title="Text">T</button>
+            </div>
+
+            <div class="draw-area show-grid" id="can-container">
+             ${can}
+            </div>
+
+            <div class="sidebar-right" id="sidebar">
+                <div class="resize right"></div>
+
+                <div class="panel-section">
+                    <span class="panel-title">Properties</span>
+                    <div class="prop-main-content">
+                        <div class="propContent"></div>
+                    </div>
+                    <div class="empty-state">No element selected</div>
+                    <div class="ChangeColor">
+                        <div class="top">
+
+                            <h1>Background color</h1>
+                            <input type="color" id="bgPicker">
+                        </div>
+                        <div class="bottom">
+                            <h1>Border color</h1>
+                            <input type="color" id="borderPicker">
+                        </div>
+                    </div>
+                </div>
+
+<div class="text-panel">
+    <h1>TextEdit</h1>
+    <div>
+         <input type="number" id="fontSizeSelect" placeholder="Font size (px)" value="16" min="8" max="200">
+    </div>
+    <div>
+        <h1>text-color</h1>
+        <input type="color" id="text-color">
+    </div>
+</div>
+
+                <div class="panel-section" style="flex:1;">
+                    <span class="panel-title">Layers</span>
+                    <ul class="layer-list" id="layerList"></ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
+`;
+ navigator.clipboard.writeText(html)
+    .then(() => alert("copy successfully"))
+    .catch(err => console.error("Copy failed:", err));
+}
+
+
+
+const htmlExport  = document.querySelector(".btn-html");
+htmlExport.addEventListener("click",()=>{
+  exportHTML();
+})
