@@ -96,38 +96,42 @@
         }
 
         /* left side toolbar */
-        #edit-container .toolbar {
-            width: var(--toolbar-width);
-            background-color: var(--bg-panel);
-            border: 2px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            align-items: center;
-            padding-top: 2rem;
-        }
+.toolbar {
+    width:var(--toolbar-width);
+    background:var(--bg-panel);
+    border-right:2px solid var(--border);
+    display:flex;
+    gap: 2rem;
+    flex-direction:column;
+    align-items:center;
+    padding-top:20px;
+}
 
-        #edit-container .toolbar .tool-btn {
-            background-color: #333;
-            border: 2px solid var(--border);
-            color: white;
-            padding: 6px 10px;
-            cursor: pointer;
-            font-size: 2rem;
-            border-radius: 0.2rem;
-            text-align: center;
+.tool-btn {
+    font-size:24px;
+    padding:6px 10px;
+    background:#333;
+    border:2px solid var(--border);
+    color:white;
+    cursor:pointer;
+}
+.tool-btn:active{
+    scale:0.95;
+}
 
+.tool-btn.active {
+    border-color:var(--accent);
+}
 
-        }
+.rectangle {
+    position:absolute;
+    border:2px solid rgb(110, 110, 110);
+    background:rgba(41, 41, 41, 0.1);
+}
 
-        #edit-container .toolbar .tool-btn:active {
-            scale: 0.95;
-        }
-
-        #edit-container .toolbar .tool-btn:hover {
-            background: #444;
-            border-color: var(--accent);
-        }
+.rectangle.selected {
+    border-color: var(--selection);
+}
 
 
         /* draw-area */
@@ -141,11 +145,11 @@
             position: relative;
         }
 
-        /* #edit-container .draw-area.can-selected {
+        /* #edit-container .draw-area#can-container {
             box-shadow: inset 0 0 0 3px var(--selection);
         } */
         #edit-container .show-grid {
-            background-image: radial-gradient(#333 0.5px, transparent 1px);
+            background-image: radial-gradient(#3b3b3b 0.5px, transparent 1px);
             background-size: 10px 10px;
         }
 
@@ -210,16 +214,6 @@
             text-transform: uppercase;
             margin-bottom: 10px;
             display: block;
-        }
-
-        .rectangle {
-            position: absolute;
-            border: 2px solid blue;
-            background: rgba(0, 0, 255, 0.1);
-        }
-        .rectangle.selected{
-            border-color: red;
-
         }
         .handle{
             width: 8px;

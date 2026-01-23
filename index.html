@@ -1,61 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Figma</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Figma Editor</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div id="hero">
-        <!-- header -->
-        <div id="header">
-            <h1>
-                Figma-Editor
-            </h1>
-            <div class="rightSide_action">
-                <button class="btn btn-reset">Reset</button>
-                <button class="btn btn-json">Export JSON</button>
-                <button class="btn btn-html">Export HTML</button>
-                <button class=" btn btn-sidebar-toggle">⚙️</button>
-            </div>
-        </div>
-        <!-- main panel -->
-        <div id="edit-container">
-            <!-- toolbar -->
 
-            <div class="toolbar">       
-                <button class="tool-btn" onclick="app.createElement('rectangle')" title="Rectangle">□</button>
-                <button class="tool-btn" onclick="app.createElement('text')" title="Text">T</button>
+<div id="hero">
 
-            </div>
-            <!-- editor panel -->
-            <div class="draw-area show-grid can-selected" id="can-container">
-                <div id="can"></div>
-            </div>
-            <!-- ride sidebar -->
-            <div class="sidebar-right " id="sidebar">
-                <div class="resize  right"></div>
-             
-                <div class="panel-section" id="properties-panel">
-                    <span class="panel-title">Properties</span>
-                    <div id="prop-content">
-                        <div class="empty-state">No element selected</div>
-                    </div>
-                </div>
-                <div class="panel-section" style="flex:1;">
-                    <span class="panel-title">Layers</span>
-                    <ul class="layer-list" id="layer-list"></ul>
-                </div>
-            </div>
+  <div id="header">
+    <h1>Figma-Editor</h1>
+    <div class="rightSide_action">
+      <button class="btn btn-reset">Reset</button>
+      <button class="btn btn-json">Export JSON</button>
+      <button class="btn btn-html">Export HTML</button>
+      <button class="btn btn-sidebar-toggle">⚙️</button>
+    </div>
+  </div>
 
-        </div>
+  <div id="edit-container">
 
+    <div class="toolbar">
+      <button class="tool-btn" id="rectBtn" title="Rectangle">□</button>
+      <button class="tool-btn" title="Text" id="textBtn">T</button>
     </div>
 
-    <script type="module" src="script.js"></script>
-</body>
+    <div class="draw-area show-grid" id="can-container">
+      <div id="can"></div>
+    </div>
 
+    <div class="sidebar-right" id="sidebar">
+      <div class="resize right"></div>
+
+      <div class="panel-section">
+        <span class="panel-title">Properties</span>
+        <div class="empty-state">No element selected</div>
+      </div>
+
+      <div class="panel-section" style="flex:1;">
+        <span class="panel-title">Layers</span>
+        <ul class="layer-list"></ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
 </html>
