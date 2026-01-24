@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Figma Editor</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.8.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -27,6 +28,7 @@
             <div class="toolbar">
                 <button class="tool-btn" id="rectBtn" title="Rectangle">□</button>
                 <button class="tool-btn" id="textBtn" title="Text">T</button>
+                <button class="tool-btn" id="colorBtn" title="pencil"><i class="ri-pencil-line"></i></button>
             </div>
 
             <div class="draw-area show-grid" id="can-container">
@@ -55,16 +57,24 @@
                     </div>
                 </div>
 
-<div class="text-panel">
-    <h1>TextEdit</h1>
-    <div>
-         <input type="number" id="fontSizeSelect" placeholder="Font size (px)" value="16" min="8" max="200">
-    </div>
-    <div>
-        <h1>text-color</h1>
-        <input type="color" id="text-color">
-    </div>
-</div>
+                <div class="text-panel">
+                    <h1>TextEdit</h1>
+                    <div>
+                        <input type="number" id="fontSizeSelect" placeholder="Font size (px)" value="16" min="8"
+                            max="200">
+                    </div>
+                    <div>
+                        <h1>text-color</h1>
+                        <input type="color" id="text-color">
+                    </div>
+                </div>
+
+
+                <!-- pencil -->
+                <div class="colorControl">
+                    <input type="color" id="colorPicker" value="#ff4757">
+                    <input type="range" id="sizePicker" min="5" max="50" value="10">
+                </div>
 
                 <div class="panel-section" style="flex:1;">
                     <span class="panel-title">Layers</span>

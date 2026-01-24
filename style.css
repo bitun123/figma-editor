@@ -196,9 +196,9 @@
         #can {
             width: 100%;
             height: 100%;
-             overflow: hidden; 
+            overflow: hidden;
             position: relative;
-          
+
         }
 
 
@@ -366,13 +366,27 @@
             color: #fff;
         }
 
-        .text-panel{
+        .text-panel {
             padding: 1rem;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
         }
-          .text-panel h1{
+
+        .text-panel h1 {
             color: var(--text-muted);
             font-size: 1rem;
-          }
+        }
+
+
+        .colorControl {
+            position: relative;
+            cursor: default;
+            padding: 1rem;
+        }
+
+        .pixel {
+            position: absolute;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }

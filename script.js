@@ -2,7 +2,11 @@ const canvas = document.getElementById("can");
 
 const textBtn = document.getElementById("textBtn");
 const rectBtn = document.getElementById("rectBtn");
+const colorbtn = document.getElementById("colorBtn");
 let activeTool = null;
+
+
+//active the tools
 function activateTool(tool) {
   activeTool = tool;
 
@@ -11,9 +15,19 @@ function activateTool(tool) {
     .forEach((btn) => btn.classList.remove("active"));
   if (tool === "rectangle") rectBtn.classList.add("active");
   if (tool === "text") textBtn.classList.add("active");
+  if (tool === "pencil") colorbtn.classList.add("active");
 }
-rectBtn.onclick = () => activateTool("rectangle");
-textBtn.onclick = () => activateTool("text");
+rectBtn.onclick = () => {
+  activateTool("rectangle");
+  ractangleTool();
+};
+textBtn.onclick = () => {
+  activateTool("text");
+  texttools();
+};
+colorbtn.onclick = () => {
+  activateTool("pencil");
+};
 
 // SideBar resize
 function reSizeSidebar() {
@@ -352,14 +366,13 @@ ractangleTool();
 //Text Tool
 
 function texttools() {
-  const textToolBtn = document.getElementById("textBtn");
-
   let isDragging = false;
   let currentBox = null;
   let offsetX = 0;
   let offsetY = 0;
 
   canvas.addEventListener("dblclick", (e) => {
+      if (activeTool !== "text") return;
     const box = document.createElement("div");
     box.className = "text-box";
     box.contentEditable = true;
@@ -434,10 +447,8 @@ function texttools() {
     });
   }
 }
-texttools();
 
-
-
+texttools()
 //reset
 
 function reset() {
@@ -449,33 +460,25 @@ function reset() {
 reset();
 
 
+//export json
+function exportJson() {
+  const jsonExport = document.querySelector(".btn-json");
+  jsonExport.addEventListener("click", () => {
+    const data = canvas.outerHTML;
 
-function exportJson(){
-const jsonExport = document.querySelector(".btn-json")
-jsonExport.addEventListener("click",()=>{
-  const data =canvas.outerHTML;
-
-
-
-
-    navigator.clipboard.writeText(data)
-    .then(() => alert("copy successfully"))
-    .catch(err => console.error("Copy failed:", err));
-})
-
+    navigator.clipboard
+      .writeText(data)
+      .then(() => alert("copy successfully"))
+      .catch((err) => console.error("Copy failed:", err));
+  });
 }
 
 
-
-
-
-
-
+// export html file
 function exportHTML() {
-
   // const rectangles = document.querySelectorAll(".rectangle");
 
-const can = canvas.outerHTML
+  const can = canvas.outerHTML;
 
   const html = `
 <!DOCTYPE html>
@@ -560,14 +563,46 @@ const can = canvas.outerHTML
 
 </html>
 `;
- navigator.clipboard.writeText(html)
+  navigator.clipboard
+    .writeText(html)
     .then(() => alert("copy successfully"))
-    .catch(err => console.error("Copy failed:", err));
+    .catch((err) => console.error("Copy failed:", err));
+}
+const htmlExport = document.querySelector(".btn-html");
+htmlExport.addEventListener("click", () => {
+  exportHTML();
+});
+
+
+
+//drawing pencil 
+function drawingPencil() {
+  const colorPicker = document.getElementById("colorPicker");
+  const sizePicker = document.getElementById("sizePicker");
+ 
+  let isDrawing = false;
+  canvas.addEventListener("mousedown", () => {
+    isDrawing = true;
+  });
+
+  canvas.addEventListener("mouseup", () => {
+    isDrawing = false;
+  });
+
+  canvas.addEventListener("mousemove", (e) => {
+      if (activeTool !== "pencil") return;
+    if (!isDrawing) return;
+    const pixel = document.createElement("div");
+    const size = sizePicker.value + "px";
+    pixel.classList.add("pixel");
+    pixel.style.width = size;
+    pixel.style.height = size;
+    pixel.style.backgroundColor = colorPicker.value;
+
+    pixel.style.left = e.pageX + "px";
+    pixel.style.top = e.pageY + "px";
+    canvas.appendChild(pixel);
+  });
 }
 
-
-
-const htmlExport  = document.querySelector(".btn-html");
-htmlExport.addEventListener("click",()=>{
-  exportHTML();
-})
+  drawingPencil();
