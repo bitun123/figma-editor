@@ -463,17 +463,21 @@ reset();
 
 
 //export json
+
 function exportJson() {
   const jsonExport = document.querySelector(".btn-json");
   jsonExport.addEventListener("click", () => {
-    const data = canvas.outerHTML;
+    const data = JSON.stringify({ canvas: canvas.outerHTML });
 
     navigator.clipboard
       .writeText(data)
-      .then(() => alert("copy successfully"))
+      .then(() => alert("Copied successfully"))
       .catch((err) => console.error("Copy failed:", err));
   });
 }
+
+exportJson();
+
 
 
 // export html file
