@@ -4,11 +4,8 @@ A mini Figma-like design editor built using HTML, CSS, and Vanilla JavaScript.
 
 ## Features
 - Rectangle & Text creation
-- Drag & drop
-- Resize & rotate
 - Layers panel
 - Properties panel
-- Save to localStorage
 - Export to JSON & HTML
 
 ## Tech Stack
@@ -22,4 +19,5 @@ Just open index.html in browser.
 
 #author
 satyajit das mahapatra
+
 
