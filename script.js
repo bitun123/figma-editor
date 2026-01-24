@@ -372,7 +372,7 @@ function texttools() {
   let offsetY = 0;
 
   canvas.addEventListener("dblclick", (e) => {
-      if (activeTool !== "text") return;
+  if (activeTool !== "text") return;
     const box = document.createElement("div");
     box.className = "text-box";
     box.contentEditable = true;
@@ -408,7 +408,9 @@ function texttools() {
   });
 
   function makeDraggable(elem) {
+      if (activeTool !== "text") return;
     elem.addEventListener("click", () => {
+      
       fontSizeSelect.value = parseInt(getComputedStyle(elem).fontSize);
     });
     elem.addEventListener("mousedown", (e) => {
